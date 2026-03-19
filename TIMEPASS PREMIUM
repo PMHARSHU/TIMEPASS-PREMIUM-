@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timepass Premium | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050208;
+            --card-glass: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- DYNAMIC COLOR ANIMATION --- */
+        @keyframes colorShift {
+            0% { --glow-color: #a020f0; --text-glow: #d8b4fe; } /* Purple */
+            33% { --glow-color: #00eaff; --text-glow: #b4f0fe; } /* Blue */
+            66% { --glow-color: #ff6a00; --text-glow: #feb482; } /* Orange */
+            100% { --glow-color: #a020f0; --text-glow: #d8b4fe; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            animation: colorShift 10s infinite linear;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; background: rgba(0,0,0,0.9);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glow-color);
+            transition: border 0.5s ease;
+        }
+        .logo { font-family: 'Poppins'; font-weight: 800; color: #fff; }
+        .info-btn { font-size: 12px; cursor: pointer; color: #fff; border: 1px solid var(--glow-color); padding: 5px 15px; border-radius: 50px; box-shadow: 0 0 10px var(--glow-color); }
+
+        .hero { text-align: center; padding: 30px 20px; }
+        .hero-img {
+            width: 180px; height: 180px; border-radius: 50%;
+            box-shadow: 0 0 30px var(--glow-color);
+            margin-bottom: 20px; object-fit: cover;
+            border: 3px solid var(--glow-color);
+            transition: 0.5s ease;
+        }
+        
+        .main-title {
+            font-family: 'Poppins'; font-size: 2.3rem; font-weight: 800;
+            color: var(--text-glow); text-transform: uppercase;
+            text-shadow: 0 0 20px var(--glow-color); cursor: pointer;
+        }
+
+        .container { padding: 20px; max-width: 600px; margin: auto; }
+        .section-label { font-family: 'Poppins'; font-size: 1.3rem; margin-bottom: 15px; display: block; color: var(--text-glow); }
+        
+        .card {
+            background: var(--card-glass); border-radius: 20px;
+            padding: 25px; margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* --- CIRCULAR FLOW GLOW BUTTON --- */
+        .glow-wrap {
+            position: relative;
+            display: flex; justify-content: center; align-items: center;
+            width: 100%; height: 60px;
+            background: #111; border-radius: 15px;
+            overflow: hidden; margin-top: 15px;
+        }
+
+        /* The Moving Glow Light (Snake Effect) */
+        .glow-wrap::before {
+            content: '';
+            position: absolute; width: 150%; height: 150%;
+            background: conic-gradient(transparent, transparent, transparent, var(--glow-color));
+            animation: rotateGlow 3s linear infinite;
+        }
+
+        .glow-wrap::after {
+            content: ''; position: absolute; inset: 3px;
+            background: #111; border-radius: 12px; z-index: 1;
+        }
+
+        @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
+
+        .btn-live {
+            position: relative; z-index: 2;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; color: #fff; font-weight: 800;
+            font-family: 'Poppins'; letter-spacing: 1px;
+            background: transparent; border: none;
+        }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; overflow-y: auto; padding: 20px; }
+        .modal-body { max-width: 500px; margin: 40px auto; background: #0f0a1a; border: 1px solid var(--glow-color); border-radius: 20px; padding: 25px; box-shadow: 0 0 30px var(--glow-color); }
+        .close-x { float: right; font-size: 28px; cursor: pointer; color: var(--glow-color); }
+        .telegram-msg { font-family: monospace; white-space: pre-wrap; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; color: #fff; font-size: 0.85rem; border: 1px solid var(--glow-color); }
+
+        footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">TIMEPASS</div>
+        <div class="info-btn" onclick="openInfo()">INFO</div>
+    </header>
+
+    <div class="hero">
+        <img src="https://i.ibb.co/7xC7jC8y/your-image.jpg" class="hero-img" alt="Profile">
+        <br>
+        <h1 class="main-title" onclick="openInfo()">TIMEPASS PREMIUM</h1>
+    </div>
+
+    <div class="container">
+        
+        <span class="section-label">🎬 Latest Movies & Series</span>
+        <div class="card">
+            <div class="price-row"><span>1 Month</span><span>₹39</span></div>
+            <div class="price-row"><span>3 Months</span><span>₹115</span></div>
+            <div class="price-row"><span>6 Months</span><span>₹230</span></div>
+            <div class="price-row"><span>1 Year</span><span>₹465</span></div>
+            
+            <div class="glow-wrap">
+                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">BUY PREMIUM</a>
+            </div>
+        </div>
+
+        <span class="section-label">🔞 Adult Premium Hub</span>
+        <div class="card">
+            <div class="price-row"><span>1 Month</span><span>₹70</span></div>
+            <div class="price-row"><span>3 Months</span><span>₹200</span></div>
+            <div class="price-row"><span>6 Months</span><span>₹410</span></div>
+            <div class="price-row"><span>1 Year</span><span>₹835</span></div>
+            
+            <div class="glow-wrap">
+                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">BUY PREMIUM</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="infoModal" class="modal">
+        <div class="modal-body">
+            <span class="close-x" onclick="closeInfo()">×</span>
+            <h3 style="margin-bottom:15px; color:var(--text-glow)">Subscription Guide</h3>
+            <div class="telegram-msg">
+⏤‌ RELEASE #PREMIUM SUBSCRIPTION FOR YOU 🎉🥳
+
+🌟 Choosᥱ thᥱ ρᥣᥲᥒ thᥲt’s right for Yoᥙ ⚡️
+
+╭───🔅 ALL PLAN DETAILS🔅────╮
+│
+│      🎁 Chᥱᥲρᥱ᥉t ρriᥴᥱ { 🎉 }
+│
+╰─▸     ₹70/-    (f᥆r 1Month/-)
+╰─▸   ₹200/-    (f᥆r 3 Month/-)
+╰─▸   ₹410/-     (for 6 Month/-) 
+╰─▸     ₹835/-  (f᥆r 1 Year/-)
+╰──────────────────────╯
+
+Note:- Adult Premium
+            </div>
+            <br>
+            <div class="telegram-msg">
+Note :- Isme Latest Movies hi milega
+@TIMEPASSQ_BOT (Kisi se bhi buy kijiye)
+            </div>
+            <div class="glow-wrap">
+                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">CONTACT ADMIN</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 TIMEPASS PREMIUM</footer>
+
+    <script>
+        function openInfo() { document.getElementById('infoModal').style.display = 'block'; }
+        function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
+        window.onclick = function(e) { if (e.target.className == 'modal') closeInfo(); }
+    </script>
+
+</body>
+</html>
