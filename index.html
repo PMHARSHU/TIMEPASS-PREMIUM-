@@ -5,18 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timepass Premium | Official</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-dark: #050208;
             --card-glass: rgba(255, 255, 255, 0.05);
-        }
-
-        /* --- DYNAMIC COLOR ANIMATION --- */
-        @keyframes colorShift {
-            0% { --glow-color: #a020f0; --text-glow: #d8b4fe; } /* Purple */
-            33% { --glow-color: #00eaff; --text-glow: #b4f0fe; } /* Blue */
-            66% { --glow-color: #ff6a00; --text-glow: #feb482; } /* Orange */
-            100% { --glow-color: #a020f0; --text-glow: #d8b4fe; }
+            --glow-color: #a020f0; 
+            --text-glow: #d8b4fe;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,45 +21,45 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            animation: colorShift 10s infinite linear;
+            transition: 0.5s ease;
         }
 
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 20px; background: rgba(0,0,0,0.9);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glow-color);
-            transition: border 0.5s ease;
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--glow-color);
         }
-        .logo { font-family: 'Poppins'; font-weight: 800; color: #fff; }
-        .info-btn { font-size: 12px; cursor: pointer; color: #fff; border: 1px solid var(--glow-color); padding: 5px 15px; border-radius: 50px; box-shadow: 0 0 10px var(--glow-color); }
+        .logo { font-family: 'Poppins'; font-weight: 800; font-size: 1.5rem; color: #fff; letter-spacing: 1px; }
+        .info-btn { font-size: 12px; cursor: pointer; color: #fff; border: 1px solid var(--glow-color); padding: 6px 18px; border-radius: 50px; box-shadow: 0 0 10px var(--glow-color); font-weight: 800; }
 
-        .hero { text-align: center; padding: 30px 20px; }
+        .hero { text-align: center; padding: 40px 20px; }
         .hero-img {
-            width: 180px; height: 180px; border-radius: 50%;
-            box-shadow: 0 0 30px var(--glow-color);
+            width: 140px; height: 140px; border-radius: 50%;
+            box-shadow: 0 0 40px var(--glow-color);
             margin-bottom: 20px; object-fit: cover;
-            border: 3px solid var(--glow-color);
-            transition: 0.5s ease;
+            border: 4px solid var(--glow-color);
         }
         
         .main-title {
-            font-family: 'Poppins'; font-size: 2.3rem; font-weight: 800;
+            font-family: 'Poppins'; font-size: 2.2rem; font-weight: 800;
             color: var(--text-glow); text-transform: uppercase;
-            text-shadow: 0 0 20px var(--glow-color); cursor: pointer;
+            text-shadow: 0 0 20px var(--glow-color);
         }
 
         .container { padding: 20px; max-width: 600px; margin: auto; }
-        .section-label { font-family: 'Poppins'; font-size: 1.3rem; margin-bottom: 15px; display: block; color: var(--text-glow); }
+        .section-label { font-family: 'Poppins'; font-size: 1.2rem; margin: 25px 0 12px; display: block; color: var(--text-glow); border-left: 4px solid var(--glow-color); padding-left: 12px; }
         
         .card {
             background: var(--card-glass); border-radius: 20px;
-            padding: 25px; margin-bottom: 25px;
+            padding: 25px; margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; font-size: 0.95rem; }
+        .price-row span:last-child { color: var(--glow-color); font-weight: 800; }
 
-        /* --- CIRCULAR FLOW GLOW BUTTON --- */
+        /* --- SNAKE ANIMATION BUTTON --- */
         .glow-wrap {
             position: relative;
             display: flex; justify-content: center; align-items: center;
@@ -73,10 +68,9 @@
             overflow: hidden; margin-top: 15px;
         }
 
-        /* The Moving Glow Light (Snake Effect) */
         .glow-wrap::before {
             content: '';
-            position: absolute; width: 150%; height: 150%;
+            position: absolute; width: 160%; height: 160%;
             background: conic-gradient(transparent, transparent, transparent, var(--glow-color));
             animation: rotateGlow 3s linear infinite;
         }
@@ -92,18 +86,37 @@
             position: relative; z-index: 2;
             width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
-            text-decoration: none; color: #fff; font-weight: 800;
-            font-family: 'Poppins'; letter-spacing: 1px;
-            background: transparent; border: none;
+            gap: 12px; text-decoration: none; color: #fff; font-weight: 800;
+            font-family: 'Poppins'; font-size: 1rem;
+            background: transparent; border: none; cursor: pointer;
         }
 
-        /* --- MODAL --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; overflow-y: auto; padding: 20px; }
-        .modal-body { max-width: 500px; margin: 40px auto; background: #0f0a1a; border: 1px solid var(--glow-color); border-radius: 20px; padding: 25px; box-shadow: 0 0 30px var(--glow-color); }
-        .close-x { float: right; font-size: 28px; cursor: pointer; color: var(--glow-color); }
-        .telegram-msg { font-family: monospace; white-space: pre-wrap; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; color: #fff; font-size: 0.85rem; border: 1px solid var(--glow-color); }
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; padding: 20px; overflow-y: auto; }
+        .modal-body { max-width: 480px; margin: 20px auto; background: #0f0a1a; border: 2px solid var(--glow-color); border-radius: 30px; padding: 30px; box-shadow: 0 0 50px rgba(0,0,0,1); text-align: center; }
+        .close-x { float: right; font-size: 30px; cursor: pointer; color: var(--glow-color); margin-top: -10px; }
 
-        footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; }
+        /* QR & UPI */
+        .qr-container { background: #fff; padding: 12px; border-radius: 20px; display: inline-block; margin: 20px 0; box-shadow: 0 0 25px var(--glow-color); }
+        .qr-img { width: 210px; height: 210px; display: block; border-radius: 10px; }
+        
+        .upi-box { 
+            display: flex; align-items: center; justify-content: space-between; 
+            background: rgba(255,255,255,0.05); border: 1px dashed var(--glow-color); 
+            padding: 12px 20px; border-radius: 15px; margin-bottom: 20px;
+        }
+        .upi-id { font-family: monospace; font-weight: 800; font-size: 1.1rem; color: var(--text-glow); }
+
+        /* INFO TABLE */
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.85rem; color: #eee; }
+        .info-table th { padding: 12px; border-bottom: 2px solid var(--glow-color); color: var(--text-glow); text-align: left; }
+        .info-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        footer p { font-size: 0.9rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+        footer span { font-size: 0.75rem; color: #888; letter-spacing: 0.5px; }
+
+        select { width: 100%; padding: 14px; background: #000; color: #fff; border: 1px solid var(--glow-color); border-radius: 12px; font-weight: 600; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
@@ -114,78 +127,134 @@
     </header>
 
     <div class="hero">
-        <img src="https://i.ibb.co/7xC7jC8y/your-image.jpg" class="hero-img" alt="Profile">
-        <br>
-        <h1 class="main-title" onclick="openInfo()">TIMEPASS PREMIUM</h1>
+        <img src="https://i.ibb.co/7xC7jC8y/your-image.jpg" class="hero-img" alt="Harsh">
+        <h1 class="main-title">TIMEPASS PREMIUM</h1>
     </div>
 
     <div class="container">
-        
-        <span class="section-label">🎬 Latest Movies & Series</span>
+        <span class="section-label">🎬 MOVIES & WEB SERIES</span>
         <div class="card">
-            <div class="price-row"><span>1 Month</span><span>₹39</span></div>
-            <div class="price-row"><span>3 Months</span><span>₹115</span></div>
-            <div class="price-row"><span>6 Months</span><span>₹230</span></div>
-            <div class="price-row"><span>1 Year</span><span>₹465</span></div>
-            
+            <div class="price-row"><span>1 Month Access</span><span>₹39</span></div>
+            <div class="price-row"><span>3 Months Access</span><span>₹115</span></div>
+            <div class="price-row"><span>6 Months Access</span><span>₹230</span></div>
+            <div class="price-row"><span>1 Year (Premium)</span><span>₹465</span></div>
             <div class="glow-wrap">
-                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">BUY PREMIUM</a>
+                <button onclick="openPayment('movies')" class="btn-live">
+                    <i class="fa-solid fa-cart-shopping"></i> BUY NOW
+                </button>
             </div>
         </div>
 
-        <span class="section-label">🔞 Adult Premium Hub</span>
+        <span class="section-label">🔞 ADULT PREMIUM HUB</span>
         <div class="card">
-            <div class="price-row"><span>1 Month</span><span>₹70</span></div>
-            <div class="price-row"><span>3 Months</span><span>₹200</span></div>
-            <div class="price-row"><span>6 Months</span><span>₹410</span></div>
-            <div class="price-row"><span>1 Year</span><span>₹835</span></div>
-            
+            <div class="price-row"><span>1 Month Access</span><span>₹70</span></div>
+            <div class="price-row"><span>3 Months Access</span><span>₹200</span></div>
+            <div class="price-row"><span>6 Months Access</span><span>₹410</span></div>
+            <div class="price-row"><span>1 Year (Full Hub)</span><span>₹835</span></div>
             <div class="glow-wrap">
-                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">BUY PREMIUM</a>
+                <button onclick="openPayment('adult')" class="btn-live">
+                    <i class="fa-solid fa-bolt"></i> GET FULL ACCESS
+                </button>
             </div>
         </div>
+    </div>
 
+    <div id="paymentModal" class="modal">
+        <div class="modal-body">
+            <span class="close-x" onclick="closePayment()">×</span>
+            <h2 style="color:var(--text-glow); font-family:'Poppins'; margin-bottom:10px;">PAYMENT</h2>
+            
+            <div class="qr-container">
+                <img src="https://i.ibb.co/60brgxSb/qr-code.png" class="qr-img" alt="QR">
+            </div>
+
+            <div class="upi-box">
+                <span class="upi-id">pmharsh@fam</span>
+                <i class="fa-regular fa-copy" style="color:var(--glow-color); cursor:pointer;" onclick="copyUPI()"></i>
+            </div>
+
+            <label style="display:block; font-size: 0.8rem; color: #aaa; margin-bottom: 5px;">Plan Select Karein:</label>
+            <select id="planSelector"></select>
+
+            <div class="glow-wrap">
+                <button onclick="sendToTelegram()" class="btn-live">
+                    <i class="fa-brands fa-telegram" style="font-size:1.5rem;"></i> SEND SCREENSHOT
+                </button>
+            </div>
+            <p style="font-size:0.75rem; color:#aaa; margin-top:15px;">Telegram pe screenshot bhejte hi link milega! ⚡</p>
+        </div>
     </div>
 
     <div id="infoModal" class="modal">
         <div class="modal-body">
             <span class="close-x" onclick="closeInfo()">×</span>
-            <h3 style="margin-bottom:15px; color:var(--text-glow)">Subscription Guide</h3>
-            <div class="telegram-msg">
-⏤‌ RELEASE #PREMIUM SUBSCRIPTION FOR YOU 🎉🥳
+            <h3 style="color:var(--text-glow); margin-bottom:15px;">TIMEPASS VS OTHERS 🍿</h3>
+            
+            <table class="info-table">
+                <tr><th>Benefit</th><th>Normal OTT</th><th>Timepass</th></tr>
+                <tr><td>Price (Month)</td><td>₹499+</td><td style="color:#0f0">₹39</td></tr>
+                <tr><td>Live Sports</td><td>Paid Extra</td><td style="color:#0f0">FREE</td></tr>
+                <tr><td>Webseries</td><td>Single Platform</td><td style="color:#0f0">ALL-IN-ONE</td></tr>
+                <tr><td>Adult Hub</td><td>No Access</td><td style="color:#0f0">YES</td></tr>
+                <tr><td>Ads</td><td>Some Have Ads</td><td style="color:#0f0">NO ADS</td></tr>
+            </table>
 
-🌟 Choosᥱ thᥱ ρᥣᥲᥒ thᥲt’s right for Yoᥙ ⚡️
+            <p style="font-size:0.8rem; text-align:left; color:#ccc; line-height:1.6; margin-top:10px;">
+                Bhai, yaha aapko Netflix, Prime aur Hotstar ka content sabse saste price mein milega. Live Match bhi dekho aur high-speed link pao!
+            </p>
 
-╭───🔅 ALL PLAN DETAILS🔅────╮
-│
-│      🎁 Chᥱᥲρᥱ᥉t ρriᥴᥱ { 🎉 }
-│
-╰─▸     ₹70/-    (f᥆r 1Month/-)
-╰─▸   ₹200/-    (f᥆r 3 Month/-)
-╰─▸   ₹410/-     (for 6 Month/-) 
-╰─▸     ₹835/-  (f᥆r 1 Year/-)
-╰──────────────────────╯
-
-Note:- Adult Premium
-            </div>
-            <br>
-            <div class="telegram-msg">
-Note :- Isme Latest Movies hi milega
-@TIMEPASSQ_BOT (Kisi se bhi buy kijiye)
-            </div>
             <div class="glow-wrap">
-                <a href="https://t.me/TIMEPASSQ_BOT" class="btn-live">CONTACT ADMIN</a>
+                <a href="https://t.me/pmharsh" class="btn-live">
+                    <i class="fa-brands fa-telegram"></i> CONTACT ADMIN
+                </a>
             </div>
         </div>
     </div>
 
-    <footer>© 2026 TIMEPASS PREMIUM</footer>
+    <footer>
+        <p>© 2026 <b>TIMEPASS PREMIUM</b>. All Rights Reserved.</p>
+        <span>Timepass Premium Reserved Copyright 2026 CC | Designed by HARSH</span>
+    </footer>
 
     <script>
+        const themes = [
+            { g: "#a020f0", t: "#d8b4fe" }, { g: "#00eaff", t: "#b4f0fe" },
+            { g: "#ff6a00", t: "#feb482" }, { g: "#00ff88", t: "#b4fee2" }, { g: "#ff0055", t: "#feb4cc" }
+        ];
+
+        window.onload = () => {
+            const r = themes[Math.floor(Math.random() * themes.length)];
+            document.documentElement.style.setProperty('--glow-color', r.g);
+            document.documentElement.style.setProperty('--text-glow', r.t);
+        };
+
         function openInfo() { document.getElementById('infoModal').style.display = 'block'; }
         function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
-        window.onclick = function(e) { if (e.target.className == 'modal') closeInfo(); }
+        function closePayment() { document.getElementById('paymentModal').style.display = 'none'; }
+
+        function openPayment(type) {
+            const sel = document.getElementById('planSelector');
+            sel.innerHTML = '';
+            let p = type === 'movies' 
+                ? ["Movies: 1 Month - ₹39", "Movies: 3 Months - ₹115", "Movies: 6 Months - ₹230", "Movies: 1 Year - ₹465"]
+                : ["Adult: 1 Month - ₹70", "Adult: 3 Months - ₹200", "Adult: 6 Months - ₹410", "Adult: 1 Year - ₹835"];
+            p.forEach(x => sel.innerHTML += `<option value="${x}">${x}</option>`);
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
+        function copyUPI() {
+            navigator.clipboard.writeText("pmharsh@fam").then(() => alert("UPI ID Copied Successfully!"));
+        }
+
+        function sendToTelegram() {
+            const plan = document.getElementById('planSelector').value;
+            const text = encodeURIComponent(`Jai Shree Ram Bhai!\nMaine payment kar di hai.\nSelected Plan: ${plan}\nScreenShot bhej raha hoon, jaldi premium activate kar do! 🙏⚡`);
+            window.open(`https://t.me/pmharsh?text=${text}`, '_blank');
+        }
+
+        window.onclick = (e) => { if (e.target.className == 'modal') { closeInfo(); closePayment(); } }
     </script>
 
 </body>
-</html>
+    </html>
+    
