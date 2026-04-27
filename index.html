@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ... (Aapka CSS yahan hai) ... */
         :root { --bg: #060109; --glow: #a020f0; --glow2: #00eaff; --card: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --text: #f0e6ff; }
         @keyframes colorShift { 0% { --glow: #a020f0; } 33% { --glow: #00cfff; } 66% { --glow: #ff5500; } 100% { --glow: #a020f0; } }
         @keyframes rotateGlow { to { transform: rotate(360deg); } }
@@ -48,14 +47,7 @@
         .info-table th { border-bottom: 2px solid var(--glow); padding:10px; color:var(--glow); text-align:left; }
         .info-table td { border-bottom: 1px solid rgba(255,255,255,0.05); padding:10px; text-align:left; }
         footer { text-align:center; padding:40px 20px; border-top:1px solid var(--border); font-size: 10px; opacity: 0.5; }
-        
-        /* New Welcome Button */
-        .welcome-harsh {
-            background: linear-gradient(90deg, #ff0080, #7928ca);
-            color: white; border: none; padding: 8px 15px;
-            border-radius: 50px; font-weight: 800; cursor: pointer;
-            margin-bottom: 10px; font-size: 10px; box-shadow: 0 0 10px #7928ca;
-        }
+        .welcome-harsh { background: linear-gradient(90deg, #ff0080, #7928ca); color: white; border: none; padding: 8px 15px; border-radius: 50px; font-weight: 800; cursor: pointer; margin-bottom: 10px; font-size: 10px; box-shadow: 0 0 10px #7928ca; }
     </style>
 </head>
 <body>
@@ -161,40 +153,128 @@
     <script>
         const BOT_TOKEN = "8205730092:AAEqOBi5t6DMSb1YdVnTDPJk32QdsTp4jgo";
         const CHAT_ID = "1763060393";
+        const visitStart = Date.now();
 
+        // ── Device + Browser info collect karo ──
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown";
+            if (/Kiwi/.test(ua)) browser = "Kiwi Browser";
+            else if (/Edg/.test(ua)) browser = "Edge";
+            else if (/OPR/.test(ua)) browser = "Opera";
+            else if (/Firefox/.test(ua)) browser = "Firefox";
+            else if (/Chrome/.test(ua)) browser = "Chrome";
+            else if (/Safari/.test(ua)) browser = "Safari";
+
+            let os = "Unknown";
+            if (/Android/.test(ua)) os = "Android 📱";
+            else if (/iPhone|iPad/.test(ua)) os = "iOS 🍎";
+            else if (/Windows/.test(ua)) os = "Windows 💻";
+            else if (/Mac/.test(ua)) os = "macOS 🍏";
+            else if (/Linux/.test(ua)) os = "Linux 🐧";
+
+            const device = /Mobi|Android/i.test(ua) ? "Mobile" : "Desktop";
+            const screen = `${window.screen.width}x${window.screen.height}`;
+            const lang = navigator.language || "?";
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "?";
+
+            return { browser, os, device, screen, lang, tz };
+        }
+
+        // ── IP + ISP fetch ──
+        async function getIPInfo() {
+            try {
+                const r = await fetch("https://ipapi.co/json/");
+                const d = await r.json();
+                return {
+                    ip: d.ip || "?",
+                    isp: d.org || "?",
+                    city: d.city || "?",
+                    region: d.region || "?",
+                    country: d.country_name || "?"
+                };
+            } catch {
+                return { ip: "?", isp: "?", city: "?", region: "?", country: "?" };
+            }
+        }
+
+        // ── Kitne minute baad click kiya ──
+        function getMinutes() {
+            return ((Date.now() - visitStart) / 60000).toFixed(1);
+        }
+
+        // ── Main notify function ──
         async function notifyBot(msg) {
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=HTML`;
-            await fetch(url);
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: msg,
+                    parse_mode: "HTML"
+                })
+            });
         }
 
-        // Automatic Tracking on Load
-        window.onload = () => {
-            notifyBot("🚀 <b>New Visitor on Website!</b>\\n⏰ Time: " + new Date().toLocaleTimeString());
-        }
+        // ── Page Load — Visitor aaya ──
+        window.onload = async () => {
+            const d = getDeviceInfo();
+            const ip = await getIPInfo();
+            const time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
-        // Harsh Admin Check
+            const msg =
+`🚀 <b>NEW VISITOR!</b>
+
+⏰ <b>Time:</b> ${time}
+🌐 <b>IP:</b> <code>${ip.ip}</code>
+🏢 <b>ISP:</b> ${ip.isp}
+📍 <b>Location:</b> ${ip.city}, ${ip.region}, ${ip.country}
+📱 <b>Device:</b> ${d.device} (${d.os})
+🌍 <b>Browser:</b> ${d.browser}
+🖥️ <b>Screen:</b> ${d.screen}
+🗣️ <b>Language:</b> ${d.lang}
+🕐 <b>Timezone:</b> ${d.tz}`;
+
+            notifyBot(msg);
+        };
+
+        // ── Harsh Button ──
         function trackHarsh() {
-            notifyBot("🚩 <b>HARSH Bhai ne Website Check Kari!</b>");
+            notifyBot("🚩 <b>HARSH Bhai ne Website Check Kari!</b>\n⏰ " + new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
             alert("Jai Shree Ram, Harsh Bhai! Notification bhej di gayi hai.");
         }
 
-        // Original Script Logic
+        // ── INFO button click ──
+        function openInfo() {
+            document.getElementById('infoModal').style.display = 'block';
+            notifyBot(`ℹ️ <b>INFO Button Click Kiya!</b>\n⏱️ Site par: ${getMinutes()} min se hai`);
+        }
+        function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
+
+        // ── Buy Pack click ──
         const UPI = "pmharsh@fam";
         let selAmt = 0, selPlan = "", currentCat = "";
 
+        const catEmoji = { movies: "🎬", adult: "🔞", combo: "🌟" };
+        const catName  = { movies: "Movies Pack", adult: "Adult Pack", combo: "COMBO Pack" };
+
         function openBuy(cat) {
             currentCat = cat;
+
+            notifyBot(`${catEmoji[cat]} <b>${catName[cat]} Button Click!</b>\n⏱️ Site par: ${getMinutes()} min se hai`);
+
             let plans = [];
             if(cat === 'movies') { plans = [{n:'1 Month', p:39}, {n:'3 Months', p:115}, {n:'6 Months', p:225}, {n:'1 Year', p:465}]; }
             else if(cat === 'adult') { plans = [{n:'1 Month', p:70}, {n:'3 Months', p:200}, {n:'6 Months', p:410}, {n:'1 Year', p:835}]; }
             else { plans = [{n:'1 Month', p:105}, {n:'3 Months', p:450}, {n:'6 Months', p:630}, {n:'1 Year', p:1030}]; }
-            
+
             document.getElementById('planGrid').innerHTML = plans.map(x => `
                 <div class="plan-card" onclick="setPlan(this,${x.p},'${x.n}')">
                     <div style="font-size:9px; opacity:0.5;">${x.n.toUpperCase()}</div>
                     <div style="font-size:1.5rem; font-weight:800;">₹${x.p}</div>
                 </div>`).join('');
-            
+
             document.getElementById('mainPage').style.display = 'none';
             document.getElementById('buyPage').style.display = 'block';
             document.getElementById('headerBtn').textContent = '← BACK';
@@ -216,29 +296,47 @@
             el.classList.add('selected'); selAmt = p; selPlan = n;
         }
 
+        // ── Proceed to Pay ──
         function goToPay() {
             if (!selAmt) return alert("Pehle ek plan select karo! 👆");
-            // Tracking Click
-            notifyBot("💰 <b>Payment Button Clicked!</b>\\nPlan: " + selPlan + "\\nPrice: ₹" + selAmt);
-            
+
+            notifyBot(`💰 <b>PLAN SELECT + PAY CLICK!</b>
+📦 <b>Pack:</b> ${catName[currentCat]}
+🗓️ <b>Plan:</b> ${selPlan}
+💵 <b>Price:</b> ₹${selAmt}
+⏱️ <b>Site par:</b> ${getMinutes()} min se hai`);
+
             document.getElementById('payAmt').textContent = '₹' + selAmt;
             document.getElementById('buyStep1').style.display = 'none';
             document.getElementById('buyStep2').style.display = 'block';
-            
+
             const payNote = document.getElementById('payNote');
-            if(currentCat === 'adult' || currentCat === 'combo') { payNote.style.display = 'block'; } 
+            if(currentCat === 'adult' || currentCat === 'combo') { payNote.style.display = 'block'; }
             else { payNote.style.display = 'none'; }
         }
 
-        function copyUPI() { navigator.clipboard.writeText(UPI); alert("UPI ID Copied!"); }
-
-        function sendTele() {
-            notifyBot("✅ <b>User clicking Telegram Link!</b>\\nPlan: " + selPlan);
-            window.open(`https://t.me/pmharsh?text=Jai Shree Ram Bhai! Payment Ho Gayi Hai.\\nPlan: ${selPlan} (₹${selAmt})\\nScreenshot Bhej Raha Hoon! 🙏`, '_blank');
+        // ── UPI Copy ──
+        function copyUPI() {
+            navigator.clipboard.writeText(UPI);
+            alert("UPI ID Copied!");
+            notifyBot(`📋 <b>UPI ID COPY KIYA!</b>
+💳 <b>UPI:</b> <code>${UPI}</code>
+📦 <b>Pack:</b> ${catName[currentCat] || '?'}
+🗓️ <b>Plan:</b> ${selPlan || 'Not selected'}
+💵 <b>Amount:</b> ₹${selAmt || '?'}
+⏱️ <b>Site par:</b> ${getMinutes()} min se hai`);
         }
 
-        function openInfo() { document.getElementById('infoModal').style.display = 'block'; }
-        function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
+        // ── Send Screenshot (Telegram link) ──
+        function sendTele() {
+            notifyBot(`📤 <b>SCREENSHOT BHEJNE WALA HAI!</b>
+📦 <b>Pack:</b> ${catName[currentCat]}
+🗓️ <b>Plan:</b> ${selPlan}
+💵 <b>Amount:</b> ₹${selAmt}
+⏱️ <b>Site par:</b> ${getMinutes()} min se hai`);
+
+            window.open(`https://t.me/pmharsh?text=Jai Shree Ram Bhai! Payment Ho Gayi Hai.%0APlan: ${selPlan} (₹${selAmt})%0AScreenshot Bhej Raha Hoon! 🙏`, '_blank');
+        }
     </script>
 </body>
 </html>
